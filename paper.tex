@@ -1,0 +1,600 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage{float}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\lam}{\lambda}
+\DeclareMathOperator{\conj}{conj}
+
+\title{New values of the largest Littlewood--Richardson coefficient\\
+via iterated Okounkov compression}
+\author{Andre Ruiz Loera\thanks{Affiliation: Department of Mathematics, University of Illinois Urbana-Champaign. Email: \texttt{andrer3@illinois.edu}.}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $C(n)=\max c^{\lam}_{\mu\nu}$ over all triples with $|\mu|+|\nu|=|\lam|=n$
+(OEIS A387851). Pak and Soskin recently computed $C(n)$ for $24\le n\le 45$ by searching
+all partition pairs at every split $k$,
+$\sum_{k\le n/2}p(k)p(n-k)$ pairs in all; the last degree took 20 hours on 32
+cluster cores. They conjectured that every maximum sits on a nested pair
+$\mu\subseteq\nu\subseteq\lam$ with $\nu/\mu$ a disjoint union of squares, uniquely so up
+to symmetry. Our starting point is the Okounkov inequality, proved
+by Lam, Postnikov and Pylyavskyy, which bounds $c^{\lam}_{\mu\nu}$ by the coefficient of
+the pair obtained by halving
+the sum vector $w=\mu+\nu$. Together with conjugation symmetry it gives a map $T$ on
+partitions of $n$ that never decreases the largest coefficient available at a sum vector.
+Pak and Soskin's structure theorem applies the Lam--Postnikov--Pylyavskyy inequality
+once, then the averaging step twice with a conjugation in between; we simply keep
+iterating until the orbit closes, and that turns the inequality into a search space
+reduction. The $p(n)$ sum vectors collapse onto a much smaller set of terminal vectors,
+expanding the terminal pairs alone already determines $C(n)$, and a far
+smaller scan over the preimages of the winning terminal vectors provably recovers every
+maximizing triple. The resulting
+algorithm reproduces all 22 reported values $C(24),\dots,C(45)$ on a single laptop
+core, taking 34 minutes end to end at $n=45$, and extends the sequence by eight terms,
+\[
+C(46),\dots,C(53) \;=\; 5932,\ 8481,\ 9926,\ 12828,\ 15762,\ 18570,\ 22982,\ 31264 .
+\]
+The accompanying maximizer search is exhaustive rather than heuristic, and both parts of
+the Pak--Soskin conjecture are verified at each new value: every maximal triple is
+square-union nested, and the maximizing triple is unique up to interchange of $\mu$ and
+$\nu$ and simultaneous conjugation.
+\end{abstract}
+
+\smallskip
+\noindent\textbf{2020 Mathematics Subject Classification.}\\
+Primary 05E05; Secondary 05A17, 05-08, 20C30.
+
+\smallskip
+\noindent\textbf{Keywords.}
+Largest Littlewood--Richardson coefficient, Okounkov inequality, Schur positivity,
+integer partitions, computational combinatorics, OEIS A387851.
+
+\section{Introduction}
+
+For partitions $\mu,\nu,\lam$ with $|\mu|+|\nu|=|\lam|$, the Littlewood--Richardson
+coefficient $c^{\lam}_{\mu\nu}$ is the multiplicity of the Schur function $s_\lam$ in
+$s_\mu s_\nu$. Following a question of Stanley \cite[Exc.~82(c)]{Sta23}, set
+\[
+C(n)\;=\;\max\bigl\{\,c^{\lam}_{\mu\nu}\;:\;|\mu|+|\nu|=|\lam|=n\,\bigr\},
+\]
+the largest Littlewood--Richardson coefficient at degree $n$; the sequence is
+OEIS~A387851 \cite{OEIS}. Stanley showed that the maximum is attained at
+$|\mu|\sim n/2$ and that $C(n)=2^{n/2-O(\sqrt{n})}$, and asked for the asymptotic limit
+shape; Pak, Panova and Yeliussizov \cite{PPY19} answered that question, proving that all
+three partitions have Vershik--Kerov--Logan--Shepp shape, and tabulated $C(n)$ for
+$n\le 23$. Pak and Soskin \cite{PS26} computed the full table of
+$C(n,k)=\max\{c^{\lam}_{\mu\nu}:|\mu|=k,\ |\lam|=n\}$ for $24\le n\le 45$ by direct
+search over triples of partitions, reported that $n=45$ required 20 hours on 32 cores,
+and stated that going beyond appeared infeasible by their method. Based on the data they
+conjectured:
+
+\begin{conjecture}[{Pak--Soskin \cite[Conj.~1.1]{PS26}}]\label{conj:ps}
+For $n\ge 16$, every triple attaining $C(n)$ satisfies
+$\mu\subseteq\nu\subseteq\lam$ (up to swapping $\mu,\nu$) with $\nu/\mu$ a disjoint
+union of square shapes; for $n\ge 28$ the maximal triple is unique up to
+interchange of $\mu$ and $\nu$ and simultaneous conjugation.
+\end{conjecture}
+
+Here and throughout,
+\emph{conjugation} conjugates all three partitions simultaneously, and a triple is
+\emph{square-union nested} if, after possibly interchanging $\mu$ and $\nu$, it
+satisfies $\mu\subseteq\nu\subseteq\lam$ and every edge-connected component of
+$\nu/\mu$ is a full $c\times c$ square.
+
+This note extends the computation by eight terms and verifies
+Conjecture~\ref{conj:ps} at each of them.
+
+\begin{theorem}[computer-assisted]\label{thm:main}
+$C(46),\dots,C(53)=5932,\ 8481,\ 9926,\ 12828,\ 15762,\ 18570,\ 22982,\ 31264$. At
+each of these $n$, every maximal triple is square-union nested and the maximizing triple
+is unique up
+to interchange of $\mu$ and $\nu$ and simultaneous conjugation, so both parts of
+Conjecture~\ref{conj:ps} hold for $46\le n\le 53$.
+\end{theorem}
+
+Section~\ref{sec:method} proves that the search underlying Theorem~\ref{thm:main} is
+exhaustive, and Section~\ref{sec:validation} reports the gates
+the implementation was put through, including an exhaustive brute force comparison at
+every degree $2\le n\le 28$.
+
+The engine is an inequality conjectured by Okounkov \cite{Oko97} and proved in full
+generality by Lam, Postnikov and Pylyavskyy \cite[Thm.~11]{LPP07}. The inequality is
+theirs; what is done here is to iterate it. In the proof of their Theorem~1.2,
+\cite{PS26} first apply the Lam--Postnikov--Pylyavskyy inequality once and then the
+Okounkov averaging step twice, with a conjugation in between, to exhibit \emph{some}
+maximizer of a prescribed shape. Applying the averaging step repeatedly, until the induced map
+on sum vectors closes up on itself, turns the inequality into a compression map that
+shrinks the search space by more than three orders of magnitude and, more importantly,
+leaves a provably complete list of candidates for the maximizers. That is the entire
+content of the method, described next.
+
+The Schur positivity landscape around this inequality has moved quickly in 2026.
+Chan, Chen, Pak and Soskin \cite{CCPS26} generalized the
+Ahlswede--Daykin inequality to a Schur positive ADS inequality that contains the
+Lam--Postnikov--Pylyavskyy inequality as a special case. Speyer \cite{Spe26} proved
+the log-concavity conjecture of Lam, Postnikov and Pylyavskyy, Le and Nguyen
+\cite{LN26} have since extended that result to skew Schur functions, and,
+closest to home,
+Chan and Pak \cite{CP26} determined equality conditions for correlation inequalities,
+the Okounkov inequality among them. None of that machinery is needed below: the
+argument uses the coefficientwise inequality (O) and nothing else. What is new here
+is the decision to iterate the averaging and conjugation step on sum vectors, and
+to treat the finite dynamics that fall out as an exact computational compression.
+
+\section{The compression map and why the search is complete}\label{sec:method}
+
+Partitions are padded with trailing zeros where needed, and sums such as $\mu+\nu$ are
+entrywise. Write $\lfloor w/2\rfloor$ and $\lceil w/2\rceil$ for the entrywise floor and ceiling
+halves of an integer vector $w$, and $\conj$ for partition conjugation. Two classical
+facts are used, and nothing else:
+\begin{enumerate}
+\item[(O)] (Okounkov inequality \cite{Oko97,LPP07}) For all partitions $\mu,\nu$ and
+every $\lam$,
+\[
+c^{\lam}_{\mu\nu}\;\le\;c^{\lam}_{\;\lfloor(\mu+\nu)/2\rfloor,\;\lceil(\mu+\nu)/2\rceil}.
+\]
+\item[(C)] (Conjugation symmetry) $c^{\lam}_{\mu\nu}=c^{\conj\lam}_{\conj\mu,\conj\nu}$.
+\end{enumerate}
+The right-hand side of (O) depends on $(\mu,\nu)$ only through the sum vector
+$w=\mu+\nu$, which is itself a partition of $n$. For a partition $w$ of $n$ put
+\[
+M(w)\;=\;\max_{\lam\,\vdash\,n}\ c^{\lam}_{\;\lfloor w/2\rfloor,\;\lceil w/2\rceil},
+\qquad
+T(w)\;=\;\conj\bigl(\lfloor w/2\rfloor\bigr)+\conj\bigl(\lceil w/2\rceil\bigr) .
+\]
+Thus $T$ halves $w$, conjugates both halves, and records the new sum vector; $T(w)$ is
+again a partition of $n$.
+
+\begin{lemma}\label{lem:mono}
+Let $w$ be a partition of $n$. Then
+\begin{enumerate}
+\item[(a)] $M(w)=\max\bigl\{c^{\lam}_{\mu\nu}\ :\ \mu+\nu=w\bigr\}$, the maximum being
+over all pairs of partitions with sum vector $w$ and all $\lam$;
+\item[(b)] $M(w)\le M\bigl(T(w)\bigr)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The pair $\bigl(\lfloor w/2\rfloor,\lceil w/2\rceil\bigr)$ has sum vector $w$, so
+$M(w)$ is at most the right-hand side. Conversely, if $\mu+\nu=w$ then (O) gives
+$c^{\lam}_{\mu\nu}\le c^{\lam}_{\lfloor w/2\rfloor,\lceil w/2\rceil}\le M(w)$ for every
+$\lam$.
+
+(b) Choose $\lam$ with $c^{\lam}_{\lfloor w/2\rfloor,\lceil w/2\rceil}=M(w)$. By (C),
+\[
+M(w)\;=\;c^{\conj\lam}_{\;\conj\lfloor w/2\rfloor,\;\conj\lceil w/2\rceil}.
+\]
+The pair $\bigl(\conj\lfloor w/2\rfloor,\conj\lceil w/2\rceil\bigr)$ is a pair of
+partitions with sum vector $T(w)$, by the definition of $T$. Applying part~(a) at
+$T(w)$ bounds the right-hand side by $M(T(w))$.
+\end{proof}
+
+Since there are only $p(n)$ partitions of $n$, the sequence $w,T(w),T^2(w),\dots$ must
+repeat. Let $k(w)\ge 1$ be least with $T^{k(w)}(w)\in\{w,T(w),\dots,T^{k(w)-1}(w)\}$ and
+put
+\[
+w^\ast\;=\;T^{k(w)}(w),
+\]
+the first repeated iterate. By construction $w^\ast$ recurs under $T$, so it is a
+periodic point of $T$; we call it the \emph{terminal vector} of $w$, and call
+$\bigl(\lfloor w^\ast/2\rfloor,\lceil w^\ast/2\rceil\bigr)$ the \emph{terminal pair}.
+Iterating Lemma~\ref{lem:mono}(b) along $w,T(w),\dots,T^{k(w)}(w)$ gives
+\begin{equation}\label{eq:chain}
+M(w)\;\le\;M(w^\ast)\qquad\text{for every }w\vdash n .
+\end{equation}
+
+\begin{proposition}\label{prop:complete}
+Let $n\ge 1$. Then
+\begin{enumerate}
+\item[(a)] $\displaystyle C(n)=\max_{w\,\vdash\,n} M(w^\ast)$, the maximum being over the
+terminal vectors alone;
+\item[(b)] if $c^{\lam}_{\mu\nu}=C(n)$ and $w=\mu+\nu$, then $M(w^\ast)=C(n)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:mono}(a), $C(n)=\max_{w\vdash n}M(w)$.
+
+(a) Each $w^\ast$ is itself a partition of $n$, so $\max_w M(w^\ast)\le\max_w
+M(w)=C(n)$; and \eqref{eq:chain} gives $M(w)\le M(w^\ast)\le \max_{w}M(w^\ast)$ for
+every $w$, hence $C(n)\le\max_w M(w^\ast)$.
+
+(b) Lemma~\ref{lem:mono}(a) gives $M(w)\ge c^{\lam}_{\mu\nu}=C(n)$, and \eqref{eq:chain}
+gives $M(w^\ast)\ge M(w)\ge C(n)$, while (a) gives $M(w^\ast)\le C(n)$.
+\end{proof}
+
+Call a terminal vector \emph{winning} if $M(w^\ast)=C(n)$, and call a partition $w$ of
+$n$ a \emph{suspect} if $w^\ast$ is winning.
+
+\begin{corollary}\label{cor:exhaustive}
+Every triple $(\lam,\mu,\nu)$ with $c^{\lam}_{\mu\nu}=C(n)$ has $\mu+\nu$ a suspect.
+Consequently, expanding $s_\mu s_\nu$ for every decomposition $\mu+\nu=w$ of every
+suspect $w$ recovers \emph{every} maximal triple, and the resulting verification of
+Conjecture~\ref{conj:ps} is exhaustive, not heuristic.
+\end{corollary}
+
+\begin{proof}
+Immediate from Proposition~\ref{prop:complete}(b) and the definitions.
+\end{proof}
+
+\begin{remark}[the iteration does not converge to a fixed point]\label{rem:cycles}
+Nothing above asserts that $w^\ast$ is fixed by $T$, and in general it is not. At six of
+the eight degrees treated below the sum vector of the maximizing pair lies on a genuine
+$2$-cycle of $T$, and only at $n=46$ and $n=53$ is it a fixed point. Only
+Lemma~\ref{lem:mono}(b) and the finiteness of the state space are used, so the argument
+is indifferent to which. Two directly verified facts explain two of the numbers reported
+below. First, at every degree $46\le n\le 53$ the set of terminal vectors was verified
+to be exactly the set of partitions of $n$ whose odd parts are pairwise distinct, so the
+terminal class counts in Table~\ref{tab:results} are values of OEIS~A006950 \cite{OEIS}.
+Second, see Lemma~\ref{lem:cycleconst}. The dynamics of $T$ in their own right are taken
+up in a separate note; nothing in the present one depends on them.
+\end{remark}
+
+\begin{lemma}\label{lem:cycleconst}
+$M$ is constant on every cycle of $T$. Hence the set of winning terminal vectors is a
+union of $T$-cycles, and its cardinality is a sum of cycle lengths.
+\end{lemma}
+
+\begin{proof}
+If $T^m(v)=v$ then Lemma~\ref{lem:mono}(b) gives
+$M(v)\le M(T(v))\le\dots\le M(T^m(v))=M(v)$, so all the inequalities are equalities.
+\end{proof}
+
+At each degree $46\le n\le 53$ the winning set turns out to be a \emph{single} cycle:
+a $2$-cycle except at $n=46$ and $n=53$, where it is a fixed point. This is the column
+``classes attaining'' of Table~\ref{tab:gap}, whose entries $1$ and $2$ are therefore an
+artefact of the cycle structure and not a failure of uniqueness. At the six degrees with
+a $2$-cycle, the two winning terminal pairs are conjugates of one another, so they carry
+the same maximal triples up to conjugation.
+
+\subsection*{The computation}
+
+\begin{enumerate}
+\item \textbf{Compress.} For each $w\vdash n$ compute $w^\ast$ by iterating $T$
+(memoized); record the fibers $w\mapsto w^\ast$. Cost: seconds.
+\item \textbf{Expand terminal pairs.} For each distinct terminal vector $w^\ast$, expand
+$s_{\lfloor w^\ast/2\rfloor}\, s_{\lceil w^\ast/2\rceil}$ with \texttt{lrcalc}
+\cite{lrcalc} and take the largest coefficient; this is $M(w^\ast)$. By
+Proposition~\ref{prop:complete}(a) the maximum over terminal vectors is $C(n)$. This pass
+dominates the runtime.
+\item \textbf{Exhaust the suspects.} Expand $s_\mu s_\nu$ for every decomposition
+$\mu+\nu=w$ of every suspect $w$. By Corollary~\ref{cor:exhaustive} this recovers every
+maximal triple $(\lam,\mu,\nu)$.
+\end{enumerate}
+The $p(n)$ sum vectors collapse onto a much smaller set of terminal vectors: $12\,306$ at
+$n=46$ growing to $32\,490$ at $n=53$, against $2.1\cdot 10^{7}$ pairs $(\mu,\nu)$ with
+$|\mu|\le|\nu|$ at $n=46$ growing to $1.0\cdot 10^{8}$ at $n=53$. In pass~3 the suspects
+are few: tens of sum vectors and $10^3$ to $10^4$ pairs at every degree computed.
+
+Each maximal triple is then tested for the square-union property (each edge-connected
+component of the skew shape $\nu/\mu$ is a full $c\times c$ square, the reading of
+\cite{PS26} matching their $n=40$ example, in which four unit boxes touching only
+diagonally count as four squares), and the list is collapsed under the interchange and
+conjugation action of Conjecture~\ref{conj:ps} to count orbits.
+
+\section{Validation}\label{sec:validation}
+
+The method was gated five ways before any new value was believed.
+
+\medskip
+\noindent\textbf{(V1) Exhaustive brute force at every degree $2\le n\le 28$.}
+For each such $n$ we computed $C(n)$ \emph{and the complete list of maximal triples} by
+direct search over every pair $(\mu\vdash k,\ \nu\vdash n-k)$ with $k\le n/2$, sharing no
+step with the compression, and compared both against the three-pass method. At all $27$
+degrees the values agree and the two lists of maximal triples agree \emph{as sets};
+so does the verdict on each part of Conjecture~\ref{conj:ps}. This is a direct test of
+Corollary~\ref{cor:exhaustive}: had the suspect scan been able to miss a maximizer, the
+lists would differ. Script \texttt{bruteforce\_gate.py}, log
+\texttt{bruteforce\_gate.log}.
+
+\medskip
+\noindent\textbf{(V2) The full reported range.} The implementation reproduces all $22$
+values $C(24),\dots,C(45)$ of the appendix of \cite{PS26}, in one run. Those values were
+not transcribed: they were parsed out of the \LaTeX{} source of the \texttt{arXiv}
+e-print of \cite{PS26}, and the maxima of the parsed $C(n,k)$ grid were checked against
+the parsed $C(n)$ row (all 22 rows, no discrepancy). Runtimes at the degrees
+\cite{PS26} timed:
+
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+$n$ & $C(n)$ \cite{PS26} & $C(n)$ here & runtime \cite{PS26} & runtime here (1 core) \\
+\midrule
+25 & 45   & 45   & 28 s (4 cores) & 0.8 s \\
+30 & 176  & 176  & 198 s (4 cores) & 4.6 s \\
+35 & 423  & 423  & 3\,258 s (4 cores) & 40 s \\
+40 & 1\,484 & 1\,484 & 44\,919 s (4 cores) & 234 s \\
+41 & 1\,768 & 1\,768 & 5\,609 s (32 cores) & 387 s \\
+45 & 4\,323 & 4\,323 & 72\,172 s (32 cores) & 2\,042 s \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The $n=41$ row is the one where \cite{PS26} moved from a laptop to the cluster, which is
+why their time drops there. All six of our times come from the single run recorded in
+\texttt{revalidate\_24\_45.log}, and all six are totals over the three passes. At
+$n=45$ the time splits as $15$ s of compression, $1\,429$ s of terminal expansion and
+$598$ s of suspect scanning. Our times are single core, and the machine was carrying
+heavy unrelated load throughout, so they are upper bounds on the cost of the method
+rather than benchmarks. The same caveat applies to Table~\ref{tab:results}, whose
+degrees were run at different times and under different load, which is why $n=51$
+there exceeds $n=52$.
+
+\medskip
+\noindent\textbf{(V3) External answer keys.} Three exhibits printed in \cite{PS26} were
+reproduced independently: their $n=40$ maximal triple $\lam=(9,7,6,5,4,3,2,2,1,1)$,
+$\mu=(6,4,3,2,2,1)$, $\nu=(6,5,4,3,2,1,1)$ has $c^{\lam}_{\mu\nu}=1484=C(40)$ with
+$\nu/\mu$ four unit squares; their counterexample at $n=11$ to the nestedness conjecture
+of \cite{PPY19} has $c^{(5,3,2,1)}_{(4,1),(3,2,1)}=3=C(11)$ with $\mu\not\subseteq\nu$,
+and our brute force at $n=11$ independently finds part~1 of Conjecture~\ref{conj:ps}
+failing there; and their four maximizers at $n=20$ all evaluate to $18=C(20)$, which our
+brute force at $n=20$ independently returns together with exactly four maximal triples.
+Finally, in the range $2\le n\le 28$ covered by (V1) the uniqueness assertion of
+Conjecture~\ref{conj:ps} fails for the last time at $n=27$ and holds at $n=28$, which is
+where \cite{PS26} place the threshold; that threshold was not an input to our
+computation.
+
+\medskip
+\noindent\textbf{(V4) A second Littlewood--Richardson implementation.} The coefficient of
+the maximal triple at each of $n=46,\dots,53$ was recomputed by direct enumeration of
+Littlewood--Richardson skew tableaux, in a from-scratch counter sharing no code and no
+algorithm with \texttt{lrcalc} (script \texttt{crosscheck.py}). All eight agree, as do
+four textbook sanity values. In addition, \texttt{lrcalc} was used to recompute the
+coefficient of every one of the fourteen maximal triples found at $46\le n\le 53$, not
+only the eight representatives printed below.
+
+\medskip
+\noindent\textbf{(V5) A second enumeration of the terminal vectors.} Pass~2 was rerun
+from an independent script (\texttt{indep53.py}) which enumerates the terminal vectors
+directly, as the partitions of $n$ with pairwise distinct odd parts, instead of by
+iterating $T$ over all $p(n)$ sum vectors, and which shares no code with
+\texttt{maxlr.py}. It has now been run to completion at \emph{every} degree
+$46\le n\le 53$, and it reproduces Table~\ref{tab:results} and Table~\ref{tab:gap}
+entry for entry: the value $C(n)$, the number of terminal classes, the number of
+classes attaining the maximum, and the largest value strictly below it all agree at
+all eight degrees. At $n=46$, for instance, it returns $C(46)=5932$ from the same
+$12\,306$ terminal vectors with one class attaining and $5\,862$ below, and at $n=53$
+it returns $C(53)=31264$ from the same $32\,490$ terminal vectors with one class
+attaining and $27\,046$ below. The two enumerations were also verified to produce
+literally the same set of terminal vectors at every $46\le n\le 53$.
+
+\medskip
+What none of these gates provides is a second, independent confirmation of the
+\emph{upper} bound at the new degrees from a different tool chain: the statement that no
+pair at degree $n$ beats the reported value rests, for $46\le n\le 53$, on
+Proposition~\ref{prop:complete} together with runs of pass~2 over the terminal vectors,
+by two scripts but with the same underlying Littlewood--Richardson library. The lower
+bounds, that the reported triples achieve the reported coefficients, are confirmed by two
+independent implementations.
+
+\section{Results}\label{sec:results}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{rrrrrrr}
+\toprule
+$n$ & $C(n)$ & terminal vectors & suspect pairs & maximal triples & orbits & runtime \\
+\midrule
+46 & 5\,932  & 12\,306 & 8\,477  & 1 & 1 & 354 s \\
+47 & 8\,481  & 14\,193 & 12\,032 & 2 & 1 & 590 s \\
+48 & 9\,926  & 16\,357 & 14\,304 & 2 & 1 & 849 s \\
+49 & 12\,828 & 18\,803 & 14\,884 & 2 & 1 & 1\,345 s \\
+50 & 15\,762 & 21\,581 & 23\,084 & 2 & 1 & 2\,239 s \\
+51 & 18\,570 & 24\,766 & 8\,910  & 2 & 1 & 11\,209 s \\
+52 & 22\,982 & 28\,394 & 4\,901  & 2 & 1 & 9\,922 s \\
+53 & 31\,264 & 32\,490 & 2\,835  & 1 & 1 & 13\,429 s \\
+\bottomrule
+\end{tabular}
+\caption{The eight new values. ``Maximal triples'' counts every triple attaining $C(n)$
+with $|\mu|\le|\nu|$; ``orbits'' counts them up to the interchange and conjugation
+action of Conjecture~\ref{conj:ps}. Runtimes are a single core of a consumer laptop
+(Apple M4, Section~\ref{sec:repro}) which was carrying unrelated load throughout, which
+is why $n=51$ exceeds $n=52$.}
+\label{tab:results}
+\end{table}
+
+Representatives of the unique maximal orbit at each degree:
+\begin{align*}
+n=46:&\quad \lam=(10,8,7,6,4,4,3,2,1,1),\ \mu=\nu=(7,5,4,3,2,1,1);\\
+n=47:&\quad \lam=(10,8,7,6,5,4,3,2,1,1),\ \mu=(7,5,4,3,2,1,1),\ \nu=(7,6,4,3,2,1,1);\\
+n=48:&\quad \lam=(10,9,7,6,5,4,3,2,1,1),\ \mu=\nu=(7,6,4,3,2,1,1);\\
+n=49:&\quad \lam=(11,9,7,6,5,4,3,2,1,1),\ \mu=(7,6,4,3,2,1,1),\ \nu=(8,6,4,3,2,1,1);\\
+n=50:&\quad \lam=(12,9,7,6,5,4,3,2,1,1),\ \mu=\nu=(8,6,4,3,2,1,1);\\
+n=51:&\quad \lam=(11,9,7,6,5,4,3,2,2,1,1),\ \mu=(7,5,4,3,2,1,1),\ \nu=(8,6,5,3,2,2,1,1);\\
+n=52:&\quad \lam=(11,9,8,6,5,4,3,2,2,1,1),\ \mu=(7,5,4,3,2,1,1),\ \nu=(8,6,5,4,3,2,1);\\
+n=53:&\quad \lam=(11,9,8,6,5,4,3,3,2,1,1),\ \mu=(7,5,4,3,2,1,1),\ \nu=(8,6,5,4,3,2,1,1).
+\end{align*}
+In every case $\nu/\mu$ is a disjoint union of unit squares no two of which share an edge
+(at $n=46,48,50$ it is empty, $\mu=\nu$, vacuously such a union), confirming part one of
+Conjecture~\ref{conj:ps}; the orbit count $1$ in Table~\ref{tab:results} is part two. The
+second maximal triple at the six degrees where there are two is the conjugate of the
+first, and is printed in the run logs. The largest consecutive ratio in the extended
+table is $C(47)/C(46)\approx 1.430$ and the smallest is $C(48)/C(47)\approx 1.170$, a
+spread comfortably inside the range $1.037$ to $1.576$ of the consecutive ratios in
+$24\le n\le 45$: the growth stays as irregular as it was.
+
+\subsection*{The gap below the maximum}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{rrrrr}
+\toprule
+$n$ & $C(n)$ & terminal vectors attaining & largest value below & ratio \\
+\midrule
+46 & 5\,932  & 1 & 5\,862  & 1.0119 \\
+47 & 8\,481  & 2 & 7\,154  & 1.1855 \\
+48 & 9\,926  & 2 & 9\,413  & 1.0545 \\
+49 & 12\,828 & 2 & 12\,449 & 1.0304 \\
+50 & 15\,762 & 2 & 14\,631 & 1.0773 \\
+51 & 18\,570 & 2 & 18\,356 & 1.0117 \\
+52 & 22\,982 & 2 & 22\,351 & 1.0282 \\
+53 & 31\,264 & 1 & 27\,046 & 1.1560 \\
+\bottomrule
+\end{tabular}
+\caption{The largest value of $M$ over terminal vectors strictly below $C(n)$. By
+Lemma~\ref{lem:cycleconst} the ``attaining'' column is a sum of $T$-cycle lengths; here
+it is one cycle throughout.}
+\label{tab:gap}
+\end{table}
+
+The compression framework makes one statistic cheap to record: the largest value
+$M(w^\ast)$ over terminal vectors \emph{strictly below} $C(n)$. The ratio column of
+Table~\ref{tab:gap} is $C(n)$ divided by that runner-up. Every row comes from
+\texttt{top2\_gap.py}, and the $n=53$ row is additionally confirmed by the
+independent terminal enumeration of gate (V5), whose per-vector maxima give
+the runner-up directly; the two agree on all four quantities
+(logs \texttt{top2\_gap\_53.log} and \texttt{indep53.log}). The gap is uniformly positive but far from uniform in size: at
+$n=46$ and $n=51$ the runner-up comes within $1.2\%$ of the maximum, while at $n=47$
+the winner exceeds the runner-up by $18.6\%$.
+Uniqueness up to symmetry holds at every computed $n$ nonetheless, including the two
+tight degrees.
+
+We stress what this statistic is not. Proposition~4.1 of \cite{PS26} shows that if $C(n)$
+is attained at a \emph{single} $k$ among the values $\{C(n,k):0\le k\le n/2\}$, then
+part~one of Conjecture~\ref{conj:ps} holds at $n$ (part one, not the uniqueness part),
+and \cite{PS26} then speculate that a runaway growth of $C(n)$ might make that hypothesis
+provable asymptotically. The relevant gap there is between the largest and the second
+largest entry of the row $\{C(n,k)\}_k$, at most $n/2$ numbers indexed by $k$. That is a
+different quantity from the one in Table~\ref{tab:gap}, and the present method does not
+deliver it: the compression map does not preserve $\min(|\mu|,|\nu|)$, so the terminal
+vectors do not respect $k$ and no row of $C(n,k)$ can be read off them. (The step
+$w\mapsto w^\ast$ changes $\min(|\mu|,|\nu|)$ for $74\%$ of the sum vectors at $n=20$
+and $82\%$ at $n=30$.) No row of $C(n,k)$ beyond $n=45$ is computed here, and we
+are not aware of one anywhere.
+
+\begin{remark}
+The method is a search space reduction, not a new upper bound, and the cost stays
+superpolynomial. Already the number of partitions of $n$ with distinct odd parts, which
+at every computed degree is exactly the number of terminal vectors, grows like
+$e^{\Theta(\sqrt n)}$ just as
+$p(n)$ does, though on the computed range the terminal count sits between a tenth and an
+eighth of $p(n)$. Pass~2 parallelizes
+trivially over terminal vectors, and a multi-process or PyPy implementation would push
+the table a few terms further; we have not established how far.
+\end{remark}
+
+\section{Reproducibility}\label{sec:repro}
+
+All computations were run with CPython 3.9.6 on macOS 15.7.1, on one core of an Apple
+M4 laptop (4 performance and 6 efficiency cores, 16 GB RAM), in a single process and a
+single thread, with the \texttt{lrcalc} library of
+Buch \cite{lrcalc}, version 2.1, through its Python bindings (\texttt{pip install
+lrcalc}). Wall-clock times were taken under unrelated load, so read them as upper
+bounds; the
+machine-independent measure of the work is the terminal-vector and suspect-pair counts
+in Table~\ref{tab:results}. The scripts and the raw logs of every run reported here are supplied as
+ancillary files with this submission, in the directory \texttt{anc/}:
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+file & what it does \\
+\midrule
+\texttt{maxlr.py} & the three-pass algorithm; \texttt{python3 maxlr.py 46 ... 53} \\
+\texttt{crosscheck.py} & independent LR counter, no \texttt{lrcalc}; \texttt{python3 crosscheck.py} \\
+\texttt{bruteforce\_gate.py} & gate (V1); \texttt{python3 bruteforce\_gate.py 2 28} \\
+\texttt{indep53.py} & independent pass~2; \texttt{python3 indep53.py 53 3} \\
+\texttt{top2\_gap.py} & Table~\ref{tab:gap}; \texttt{python3 top2\_gap.py 46 ... 53} \\
+\texttt{results\_46\_50.log} & runs behind Table~\ref{tab:results}, $n=46$ to $50$ \\
+\texttt{results\_51\_52.log} & runs behind Table~\ref{tab:results}, $n=51,52$ \\
+\texttt{results\_53.log} & run behind Table~\ref{tab:results}, $n=53$ \\
+\texttt{revalidate\_24\_45.log} & gate (V2), the reported range \\
+\texttt{bruteforce\_gate.log} & gate (V1) \\
+\texttt{crosscheck.log} & gate (V4) \\
+\texttt{indep\_46\_52.log}, \texttt{indep53.log} & gate (V5) \\
+\texttt{top2\_gap.log}, \texttt{top2\_gap\_53.log} & Table~\ref{tab:gap} \\
+\texttt{README.txt} & the above, with the environment and expected runtimes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+Every value in the tables above appears in one of those logs, and the remaining figures
+quoted in the text are arithmetic on them. The range-based scripts take a degree range
+on the command line as shown above (\texttt{crosscheck.py} takes no arguments) and
+print one line per degree; none of them needs an argument file, a data
+file or a network connection.
+
+\section*{Acknowledgements}
+
+Claude (Anthropic) was used for assistance with the implementation, the computations,
+and the preparation of this manuscript; every new computational result reported in this paper is an output of the
+accompanying code and its committed logs. The author reviewed the proofs, the code and
+the logs, and is responsible for the results and conclusions.
+
+\begin{thebibliography}{99}
+
+\bibitem{CCPS26}
+S.~H. Chan, H.~Chen, I.~Pak, D.~Soskin,
+\emph{Correlation inequalities for Schur positivity},
+arXiv:2606.06688 (2026).
+
+\bibitem{CP26}
+S.~H. Chan, I.~Pak,
+\emph{Equality conditions for correlation inequalities},
+arXiv:2607.06275 (2026).
+
+\bibitem{LPP07}
+T.~Lam, A.~Postnikov, P.~Pylyavskyy,
+\emph{Schur positivity and Schur log-concavity},
+Amer. J. Math. \textbf{129} (2007), 1611--1622.
+
+\bibitem{LN26}
+T.~Le, S.~Nguyen,
+\emph{Skew hives, skew skeps, skew Schur log-concavity},
+arXiv:2608.13544 (2026).
+
+\bibitem{lrcalc}
+A.~S. Buch,
+\emph{The Littlewood--Richardson calculator} (\texttt{lrcalc}), version 2.1,
+software, \url{https://sites.math.rutgers.edu/~asbuch/lrcalc/}.
+
+\bibitem{OEIS}
+OEIS Foundation Inc.,
+\emph{The On-Line Encyclopedia of Integer Sequences}, entries A387851 and A006950,
+\url{https://oeis.org}.
+
+\bibitem{Oko97}
+A.~Okounkov,
+\emph{Log-concavity of multiplicities with applications to characters of $U(\infty)$},
+Adv. Math. \textbf{127} (1997), 258--282.
+
+\bibitem{PPY19}
+I.~Pak, G.~Panova, D.~Yeliussizov,
+\emph{On the largest Kronecker and Littlewood--Richardson coefficients},
+J. Combin. Theory Ser. A \textbf{165} (2019), 44--77.
+
+\bibitem{PS26}
+I.~Pak, D.~Soskin,
+\emph{On the largest Littlewood--Richardson coefficient},
+arXiv:2608.03281 (2026).
+
+\bibitem{Spe26}
+D.~E. Speyer,
+\emph{L-log-concavity and a proof of the conjecture of Lam, Postnikov and Pylyavskyy},
+arXiv:2601.05007 (2026).
+
+\bibitem{Sta23}
+R.~P. Stanley,
+\emph{Supplementary exercises for Enumerative Combinatorics}, vol.~2, Chapter~7,
+Exercise~82(c), version of June~4, 2023;
+\url{http://www-math.mit.edu/~rstan/ec}.
+
+\end{thebibliography}
+
+\end{document}

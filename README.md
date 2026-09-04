@@ -7,9 +7,9 @@ This repository is the code-and-logs half of the paper
 
 > Andre Ruiz Loera, *New values of the largest Littlewood-Richardson
 > coefficient via iterated Okounkov compression*, 2026.
-> arXiv: **[TO FILL AFTER POSTING]**
+> Published as a Zenodo record; this repository and the record carry the manuscript (paper.pdf) alongside the code.
 
-It contains, byte for byte, the ancillary directory `anc/` of the arXiv
+It contains, byte for byte, the ancillary directory `anc/` of the submission
 submission: every script the paper cites and the raw log of every run it
 reports. File names are unchanged, so the paper's reproducibility table
 (Section "Reproducibility") maps one to one onto this directory.
@@ -134,7 +134,7 @@ ancillary README, kept verbatim) and the paper's verification section.
 
 ## Citing
 
-Cite the paper (title and author above; arXiv id to be filled after
+Cite the paper by its Zenodo DOI (minted on release; see the repository page after
 posting) and, once minted, the Zenodo DOI of this repository's v1.0.0
 release. See `CITATION.cff`.
 
