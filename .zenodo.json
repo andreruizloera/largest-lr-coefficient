@@ -1,0 +1,25 @@
+{
+  "upload_type": "software",
+  "title": "Code and logs for: New values of the largest Littlewood-Richardson coefficient via iterated Okounkov compression",
+  "creators": [
+    {
+      "name": "Ruiz Loera, Andre",
+      "affiliation": "Department of Mathematics, University of Illinois Urbana-Champaign"
+    }
+  ],
+  "description": "Scripts and raw computation logs, exactly as submitted as ancillary files with the paper, computing the largest Littlewood-Richardson coefficient C(n) for 46 <= n <= 53 (OEIS A387851) by iterated Okounkov compression and verifying both parts of the Pak-Soskin conjecture on the maximizers. Includes the independent verification gates: an lrcalc-free tableau-enumeration crosscheck, an exhaustive brute-force gate for 2 <= n <= 28, and an independent terminal-vector rerun of the scan.",
+  "license": "MIT",
+  "keywords": [
+    "Littlewood-Richardson coefficients",
+    "algebraic combinatorics",
+    "computational combinatorics",
+    "OEIS A387851"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "arXiv:TO-FILL-AFTER-POSTING",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-preprint"
+    }
+  ]
+}

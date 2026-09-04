@@ -1,0 +1,16 @@
+n=51: p(n) sum-vectors compressed to 24766 terminal classes  [7.5s]
+n=51: C(n) = 18570 from terminal classes (2 attain it)  [9668.0s]
+n=51: checked 8910 suspect pairs from 9 sum-vectors; 2 maximal triples  [1533.4s]
+n=51: C(n)=18570  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(11, 9, 7, 6, 5, 4, 3, 2, 2, 1, 1) mu=(7, 5, 4, 3, 2, 1, 1) nu=(8, 6, 5, 3, 2, 2, 1, 1) square-union=True
+    lam=(11, 9, 7, 6, 5, 4, 3, 2, 2, 1, 1) mu=(7, 5, 4, 3, 2, 1, 1) nu=(8, 6, 4, 3, 3, 2, 1, 1) square-union=True
+n=51: total 11208.9s
+
+n=52: p(n) sum-vectors compressed to 28394 terminal classes  [19.1s]
+n=52: C(n) = 22982 from terminal classes (2 attain it)  [8662.4s]
+n=52: checked 4901 suspect pairs from 4 sum-vectors; 2 maximal triples  [1240.3s]
+n=52: C(n)=22982  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(11, 9, 8, 6, 5, 4, 3, 2, 2, 1, 1) mu=(7, 5, 4, 3, 2, 1, 1) nu=(8, 6, 5, 4, 3, 2, 1) square-union=True
+    lam=(11, 9, 7, 6, 5, 4, 3, 3, 2, 1, 1) mu=(7, 5, 4, 3, 2, 1, 1) nu=(7, 6, 5, 4, 3, 2, 1, 1) square-union=True
+n=52: total 9921.8s
+

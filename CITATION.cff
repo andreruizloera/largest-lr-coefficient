@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: >-
+  If you use this code or these logs, please cite both this repository and
+  the paper it accompanies (arXiv id to be filled after posting).
+type: software
+title: >-
+  Code and logs for: New values of the largest Littlewood-Richardson
+  coefficient via iterated Okounkov compression
+version: 1.0.0
+date-released: "2026-09-03"
+license: MIT
+authors:
+  - family-names: Ruiz Loera
+    given-names: Andre
+    affiliation: >-
+      Department of Mathematics, University of Illinois Urbana-Champaign
+repository-code: https://github.com/andreruizloera/largest-lr-coefficient
+keywords:
+  - Littlewood-Richardson coefficients
+  - algebraic combinatorics
+  - computational combinatorics
+  - OEIS A387851
+preferred-citation:
+  type: article
+  title: >-
+    New values of the largest Littlewood-Richardson coefficient via
+    iterated Okounkov compression
+  authors:
+    - family-names: Ruiz Loera
+      given-names: Andre
+      affiliation: >-
+        Department of Mathematics, University of Illinois Urbana-Champaign
+  year: 2026
+  notes: "arXiv id TO FILL AFTER POSTING"

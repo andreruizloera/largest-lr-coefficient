@@ -1,0 +1,21 @@
+CHECK 0: coverage, stated before any verdict
+  C(n) parsed from primary logs for 30 values of n, n = 24 to 53
+  [PASS] every n in 24..53 present
+
+CHECK 1: the two extended consecutive ratios
+  [PASS] C(47)/C(46) = 8481/5932 = 1.4297, paper prints 1.43
+  [PASS] C(48)/C(47) = 9926/8481 = 1.1704, paper prints 1.17
+
+CHECK 2: the range of consecutive ratios over 24 <= n <= 45
+  [PASS] smallest is C(35)/C(34) = 1.0368, paper prints 1.037
+  [PASS] largest is C(28)/C(27) = 1.5763, paper prints 1.576
+
+CHECK 3: the runner-up gaps, from top2_gap.log
+  runner-up ratios parsed for n = [47, 48, 49, 50, 51, 52]
+  [PASS] n=47: ratio 1.1855 gives 18.55%, paper prints 18.6% as the gap
+  [PASS] n=51: ratio 1.0117 gives 1.17%, paper prints 1.2% as the within
+
+CHECK 4: the n=47 total printed as 590 s
+  [PASS] logged 589.9 s rounds to 590, paper prints 590 s
+
+ALL DERIVED NUMBERS VERIFIED AGAINST THE PRIMARY LOGS

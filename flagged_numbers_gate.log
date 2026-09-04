@@ -1,0 +1,28 @@
+COVERAGE, stated before any verdict
+  paper.tex          : 27,792 chars
+  paper.pdf as text  : 22,399 chars
+  C values in the logs: 8 ([46, 47, 48, 49, 50, 51, 52, 53]...)
+
+G1  THOUSANDS-SEPARATOR FRAGMENTS: pdftotext split these
+  [PASS] '919': source has '44\,919' = True; fragment standing alone = False
+  [PASS] '172': source has '72\,172' = True; fragment standing alone = False
+
+G2  SUPERSCRIPT ARTIFACTS
+  [PASS] '103': source has '10^3' = True; flattened form in source = False
+  [PASS] '104': source has '10^4' = True; flattened form in source = False
+
+G3  THE DERIVED RATIO, recomputed from the logged C values
+  [PASS] C(47)/C(46) = 8481/5932 = 1.430, paper prints 1.430
+  [PASS] C(48)/C(47) = 9926/8481 = 1.170, paper prints 1.170
+
+G4  THE CROSS-REFERENCE
+  [PASS] '4.1' appears as a proposition number attributed to another work
+
+G5  NEGATIVE CONTROL: a wrong pair must fail G3
+  [PASS] perturbing C(47) gives 1.447, not 1.430
+
+======================================================================
+ALL FIVE FLAGGED NUMBERS RESOLVE
+======================================================================
+SCOPE: this says what each flagged string IS. The C values
+themselves are gated by the paper's own verification section.

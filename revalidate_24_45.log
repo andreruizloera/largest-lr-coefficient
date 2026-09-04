@@ -1,0 +1,176 @@
+n=24: p(n) sum-vectors compressed to 350 terminal classes  [0.2s]
+n=24: C(n) = 41 from terminal classes (2 attain it)  [0.2s]
+n=24: checked 576 suspect pairs from 11 sum-vectors; 2 maximal triples  [0.2s]
+n=24: C(n)=41  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(8, 6, 4, 3, 2, 1) mu=(5, 3, 2, 1) nu=(6, 4, 2, 1) square-union=True
+    lam=(6, 5, 4, 3, 2, 2, 1, 1) mu=(4, 3, 2, 1, 1) nu=(4, 3, 2, 2, 1, 1) square-union=True
+n=24: total 0.6s
+
+n=25: p(n) sum-vectors compressed to 420 terminal classes  [0.2s]
+n=25: C(n) = 45 from terminal classes (2 attain it)  [0.3s]
+n=25: checked 596 suspect pairs from 8 sum-vectors; 2 maximal triples  [0.3s]
+n=25: C(n)=45  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(8, 6, 4, 3, 2, 1, 1) mu=(5, 3, 2, 1) nu=(6, 4, 2, 1, 1) square-union=True
+    lam=(7, 5, 4, 3, 2, 2, 1, 1) mu=(4, 3, 2, 1, 1) nu=(5, 3, 2, 2, 1, 1) square-union=True
+n=25: total 0.8s
+
+n=26: p(n) sum-vectors compressed to 501 terminal classes  [0.3s]
+n=26: C(n) = 50 from terminal classes (2 attain it)  [0.5s]
+n=26: checked 887 suspect pairs from 20 sum-vectors; 4 maximal triples  [0.4s]
+n=26: C(n)=50  conj part1 (all square-union): True  part2 (unique up to transp+conj): False [2 orbit(s)]
+    lam=(9, 7, 4, 3, 2, 1) mu=(6, 4, 2, 1) nu=(6, 4, 2, 1) square-union=True
+    lam=(9, 6, 5, 3, 2, 1) mu=(6, 4, 2, 1) nu=(6, 4, 2, 1) square-union=True
+    lam=(6, 5, 4, 3, 3, 2, 1, 1, 1) mu=(4, 3, 2, 2, 1, 1) nu=(4, 3, 2, 2, 1, 1) square-union=True
+    lam=(6, 5, 4, 3, 2, 2, 2, 1, 1) mu=(4, 3, 2, 2, 1, 1) nu=(4, 3, 2, 2, 1, 1) square-union=True
+n=26: total 1.2s
+
+n=27: p(n) sum-vectors compressed to 602 terminal classes  [0.4s]
+n=27: C(n) = 59 from terminal classes (2 attain it)  [0.7s]
+n=27: checked 324 suspect pairs from 3 sum-vectors; 4 maximal triples  [0.3s]
+n=27: C(n)=59  conj part1 (all square-union): True  part2 (unique up to transp+conj): False [2 orbit(s)]
+    lam=(8, 6, 5, 3, 2, 2, 1) mu=(5, 3, 2, 1) nu=(6, 4, 3, 2, 1) square-union=True
+    lam=(8, 6, 5, 4, 2, 1, 1) mu=(5, 3, 2, 1) nu=(6, 4, 3, 2, 1) square-union=True
+    lam=(7, 5, 4, 4, 3, 2, 1, 1) mu=(4, 3, 2, 1, 1) nu=(5, 4, 3, 2, 1, 1) square-union=True
+    lam=(7, 6, 4, 3, 3, 2, 1, 1) mu=(4, 3, 2, 1, 1) nu=(5, 4, 3, 2, 1, 1) square-union=True
+n=27: total 1.4s
+
+n=28: p(n) sum-vectors compressed to 722 terminal classes  [0.5s]
+n=28: C(n) = 93 from terminal classes (2 attain it)  [1.4s]
+n=28: checked 620 suspect pairs from 7 sum-vectors; 2 maximal triples  [0.6s]
+n=28: C(n)=93  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(7, 6, 5, 4, 3, 2, 1) mu=(5, 4, 2, 1, 1) nu=(5, 4, 3, 2, 1) square-union=True
+    lam=(7, 6, 5, 4, 3, 2, 1) mu=(5, 3, 2, 2, 1) nu=(5, 4, 3, 2, 1) square-union=True
+n=28: total 2.5s
+
+n=29: p(n) sum-vectors compressed to 858 terminal classes  [0.8s]
+n=29: C(n) = 112 from terminal classes (1 attain it)  [2.6s]
+n=29: checked 391 suspect pairs from 6 sum-vectors; 2 maximal triples  [0.4s]
+n=29: C(n)=112  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(8, 6, 5, 4, 3, 2, 1) mu=(5, 4, 2, 2, 1) nu=(5, 4, 3, 2, 1) square-union=True
+    lam=(7, 6, 5, 4, 3, 2, 1, 1) mu=(5, 4, 2, 2, 1) nu=(5, 4, 3, 2, 1) square-union=True
+n=29: total 3.8s
+
+n=30: p(n) sum-vectors compressed to 1016 terminal classes  [0.8s]
+n=30: C(n) = 176 from terminal classes (1 attain it)  [2.8s]
+n=30: checked 840 suspect pairs from 13 sum-vectors; 1 maximal triples  [1.0s]
+n=30: C(n)=176  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(8, 6, 5, 4, 3, 2, 1, 1) mu=(5, 4, 3, 2, 1) nu=(5, 4, 3, 2, 1) square-union=True
+n=30: total 4.6s
+
+n=31: p(n) sum-vectors compressed to 1206 terminal classes  [0.9s]
+n=31: C(n) = 196 from terminal classes (2 attain it)  [4.8s]
+n=31: checked 1785 suspect pairs from 21 sum-vectors; 2 maximal triples  [3.4s]
+n=31: C(n)=196  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(8, 7, 5, 4, 3, 2, 1, 1) mu=(5, 4, 3, 2, 1) nu=(6, 4, 3, 2, 1) square-union=True
+    lam=(8, 6, 5, 4, 3, 2, 2, 1) mu=(5, 4, 3, 2, 1) nu=(5, 4, 3, 2, 1, 1) square-union=True
+n=31: total 9.1s
+
+n=32: p(n) sum-vectors compressed to 1431 terminal classes  [1.3s]
+n=32: C(n) = 270 from terminal classes (2 attain it)  [8.6s]
+n=32: checked 2688 suspect pairs from 29 sum-vectors; 2 maximal triples  [7.0s]
+n=32: C(n)=270  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(9, 7, 5, 4, 3, 2, 1, 1) mu=(6, 4, 3, 2, 1) nu=(6, 4, 3, 2, 1) square-union=True
+    lam=(8, 6, 5, 4, 3, 2, 2, 1, 1) mu=(5, 4, 3, 2, 1, 1) nu=(5, 4, 3, 2, 1, 1) square-union=True
+n=32: total 16.9s
+
+n=33: p(n) sum-vectors compressed to 1687 terminal classes  [1.7s]
+n=33: C(n) = 298 from terminal classes (2 attain it)  [10.0s]
+n=33: checked 2774 suspect pairs from 21 sum-vectors; 2 maximal triples  [8.6s]
+n=33: C(n)=298  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(9, 7, 5, 4, 3, 2, 2, 1) mu=(6, 4, 3, 2, 1) nu=(6, 4, 3, 2, 1, 1) square-union=True
+    lam=(8, 7, 5, 4, 3, 2, 2, 1, 1) mu=(5, 4, 3, 2, 1, 1) nu=(6, 4, 3, 2, 1, 1) square-union=True
+n=33: total 20.4s
+
+n=34: p(n) sum-vectors compressed to 1981 terminal classes  [1.8s]
+n=34: C(n) = 408 from terminal classes (1 attain it)  [18.2s]
+n=34: checked 2023 suspect pairs from 13 sum-vectors; 1 maximal triples  [8.3s]
+n=34: C(n)=408  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(9, 7, 5, 4, 3, 2, 2, 1, 1) mu=(6, 4, 3, 2, 1, 1) nu=(6, 4, 3, 2, 1, 1) square-union=True
+n=34: total 28.3s
+
+n=35: p(n) sum-vectors compressed to 2331 terminal classes  [2.2s]
+n=35: C(n) = 423 from terminal classes (2 attain it)  [22.7s]
+n=35: checked 2828 suspect pairs from 16 sum-vectors; 2 maximal triples  [15.4s]
+n=35: C(n)=423  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(9, 7, 6, 4, 3, 2, 2, 1, 1) mu=(6, 4, 3, 2, 1, 1) nu=(6, 5, 3, 2, 1, 1) square-union=True
+    lam=(9, 7, 5, 4, 3, 3, 2, 1, 1) mu=(6, 4, 3, 2, 1, 1) nu=(6, 4, 3, 2, 2, 1) square-union=True
+n=35: total 40.2s
+
+n=36: p(n) sum-vectors compressed to 2741 terminal classes  [2.7s]
+n=36: C(n) = 640 from terminal classes (1 attain it)  [33.7s]
+n=36: checked 257 suspect pairs from 1 sum-vectors; 1 maximal triples  [2.0s]
+n=36: C(n)=640  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(8, 7, 6, 5, 4, 3, 2, 1) mu=(5, 4, 3, 2, 1) nu=(6, 5, 4, 3, 2, 1) square-union=True
+n=36: total 38.4s
+
+n=37: p(n) sum-vectors compressed to 3206 terminal classes  [3.7s]
+n=37: C(n) = 840 from terminal classes (2 attain it)  [61.7s]
+n=37: checked 810 suspect pairs from 3 sum-vectors; 2 maximal triples  [8.6s]
+n=37: C(n)=840  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(9, 7, 6, 5, 4, 3, 2, 1) mu=(6, 4, 3, 2, 1) nu=(6, 5, 4, 3, 2, 1) square-union=True
+    lam=(8, 7, 6, 5, 4, 3, 2, 1, 1) mu=(5, 4, 3, 2, 1, 1) nu=(6, 5, 4, 3, 2, 1) square-union=True
+n=37: total 74.0s
+
+n=38: p(n) sum-vectors compressed to 3740 terminal classes  [4.5s]
+n=38: C(n) = 1096 from terminal classes (1 attain it)  [79.4s]
+n=38: checked 682 suspect pairs from 2 sum-vectors; 1 maximal triples  [9.7s]
+n=38: C(n)=1096  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(9, 7, 6, 5, 4, 3, 2, 1, 1) mu=(6, 4, 3, 2, 1, 1) nu=(6, 5, 4, 3, 2, 1) square-union=True
+n=38: total 93.6s
+
+n=39: p(n) sum-vectors compressed to 4368 terminal classes  [5.1s]
+n=39: C(n) = 1216 from terminal classes (2 attain it)  [107.7s]
+n=39: checked 1566 suspect pairs from 4 sum-vectors; 2 maximal triples  [30.2s]
+n=39: C(n)=1216  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(10, 7, 6, 5, 4, 3, 2, 1, 1) mu=(6, 4, 3, 2, 1, 1) nu=(7, 5, 4, 3, 2, 1) square-union=True
+    lam=(9, 7, 6, 5, 4, 3, 2, 1, 1, 1) mu=(6, 4, 3, 2, 1, 1) nu=(6, 5, 4, 3, 2, 1, 1) square-union=True
+n=39: total 143.1s
+
+n=40: p(n) sum-vectors compressed to 5096 terminal classes  [6.6s]
+n=40: C(n) = 1484 from terminal classes (2 attain it)  [182.1s]
+n=40: checked 2006 suspect pairs from 5 sum-vectors; 2 maximal triples  [45.3s]
+n=40: C(n)=1484  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(10, 8, 6, 5, 4, 3, 2, 1, 1) mu=(6, 5, 3, 2, 1, 1) nu=(7, 5, 4, 3, 2, 1) square-union=True
+    lam=(9, 7, 6, 5, 4, 3, 2, 2, 1, 1) mu=(6, 4, 3, 2, 2, 1) nu=(6, 5, 4, 3, 2, 1, 1) square-union=True
+n=40: total 234.0s
+
+n=41: p(n) sum-vectors compressed to 5922 terminal classes  [6.4s]
+n=41: C(n) = 1768 from terminal classes (2 attain it)  [289.8s]
+n=41: checked 2772 suspect pairs from 7 sum-vectors; 2 maximal triples  [90.5s]
+n=41: C(n)=1768  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(10, 8, 7, 5, 4, 3, 2, 1, 1) mu=(7, 5, 3, 2, 1, 1) nu=(7, 5, 4, 3, 2, 1) square-union=True
+    lam=(9, 7, 6, 5, 4, 3, 3, 2, 1, 1) mu=(6, 4, 3, 2, 2, 1, 1) nu=(6, 5, 4, 3, 2, 1, 1) square-union=True
+n=41: total 386.7s
+
+n=42: p(n) sum-vectors compressed to 6868 terminal classes  [9.1s]
+n=42: C(n) = 2074 from terminal classes (2 attain it)  [395.3s]
+n=42: checked 1757 suspect pairs from 4 sum-vectors; 2 maximal triples  [63.1s]
+n=42: C(n)=2074  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(11, 9, 7, 5, 4, 3, 2, 1) mu=(7, 5, 3, 2, 1) nu=(8, 6, 4, 3, 2, 1) square-union=True
+    lam=(8, 7, 6, 5, 4, 3, 3, 2, 2, 1, 1) mu=(5, 4, 3, 2, 2, 1, 1) nu=(6, 5, 4, 3, 2, 2, 1, 1) square-union=True
+n=42: total 467.4s
+
+n=43: p(n) sum-vectors compressed to 7967 terminal classes  [10.4s]
+n=43: C(n) = 2624 from terminal classes (2 attain it)  [627.6s]
+n=43: checked 2682 suspect pairs from 5 sum-vectors; 2 maximal triples  [142.3s]
+n=43: C(n)=2624  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(11, 9, 7, 5, 4, 3, 2, 1, 1) mu=(7, 5, 3, 2, 1, 1) nu=(8, 6, 4, 3, 2, 1) square-union=True
+    lam=(9, 7, 6, 5, 4, 3, 3, 2, 2, 1, 1) mu=(6, 4, 3, 2, 2, 1, 1) nu=(6, 5, 4, 3, 2, 2, 1, 1) square-union=True
+n=43: total 780.3s
+
+n=44: p(n) sum-vectors compressed to 9233 terminal classes  [13.3s]
+n=44: C(n) = 3450 from terminal classes (2 attain it)  [993.5s]
+n=44: checked 11246 suspect pairs from 47 sum-vectors; 2 maximal triples  [458.0s]
+n=44: C(n)=3450  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(10, 8, 7, 6, 4, 3, 3, 2, 1) mu=(7, 5, 4, 3, 2, 1) nu=(7, 5, 4, 3, 2, 1) square-union=True
+    lam=(9, 8, 7, 5, 4, 4, 3, 2, 1, 1) mu=(6, 5, 4, 3, 2, 1, 1) nu=(6, 5, 4, 3, 2, 1, 1) square-union=True
+n=44: total 1464.8s
+
+n=45: p(n) sum-vectors compressed to 10670 terminal classes  [15.3s]
+n=45: C(n) = 4323 from terminal classes (2 attain it)  [1429.1s]
+n=45: checked 11743 suspect pairs from 34 sum-vectors; 2 maximal triples  [597.6s]
+n=45: C(n)=4323  conj part1 (all square-union): True  part2 (unique up to transp+conj): True [1 orbit(s)]
+    lam=(10, 8, 7, 6, 4, 3, 3, 2, 1, 1) mu=(7, 5, 4, 3, 2, 1) nu=(7, 5, 4, 3, 2, 1, 1) square-union=True
+    lam=(10, 8, 7, 5, 4, 4, 3, 2, 1, 1) mu=(6, 5, 4, 3, 2, 1, 1) nu=(7, 5, 4, 3, 2, 1, 1) square-union=True
+n=45: total 2042.0s
+
